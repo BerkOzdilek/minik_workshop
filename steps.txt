@@ -1,0 +1,10 @@
+minikube start
+minikube dashboard
+minikube addons enable ingress
+minikube addons list
+
+kubectl get ingress
+sudo nano /etc/hosts
+    # workshop
+    192.168.99.103 api.myapp.info
+    192.168.99.103 myapp.info
