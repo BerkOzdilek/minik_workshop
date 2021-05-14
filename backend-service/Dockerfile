@@ -1,5 +1,11 @@
+# build environment
+FROM gradle:6.8.3-jdk11 AS build
+COPY --chown=gradle:gradle . /home/gradle/src
+WORKDIR /home/gradle/src
+RUN gradle build --no-daemon
+
+# production environment
 FROM openjdk:11-jre-slim
-
-COPY build/libs .
-
-CMD ["java", "-XX:MaxRAMPercentage=75", "-Djava.security.egd=file:/dev/./urandom", "-jar", "backend-service-0.0.1-SNAPSHOT.jar"]
+COPY --from=build /home/gradle/src/build/libs/*.jar /application.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/application.jar"]

@@ -5,10 +5,9 @@ function ClickAndShow() {
     const initialList = []
     const [list, setList] = React.useState(initialList);
 
-    function onPressLearnMore() {
+    function onClick() {
         axios({
-            // baseURL: 'http://api.myapp.info/',
-            baseURL: 'http://localhost:8080',
+            baseURL: window._env_.API_URL,// || 'http://localhost:8080',
             url: '/hello',
             headers: {'Accept': '*/*'}
         })
@@ -23,8 +22,9 @@ function ClickAndShow() {
 
     return (
         <div className="App">
-            <button onClick={onPressLearnMore}>
-                Activate Lasers
+            <p>API_URL: {window._env_.API_URL}</p>
+            <button onClick={onClick}>
+                Click me
             </button>
             <ul>{list.map((item, index) => <li key={index}>{item}</li>)}</ul>
         </div>

@@ -8,8 +8,5 @@ TAG=minik_backend
 # tag image
 [ ! -z "$1" ] && TAG=$1
 
-# build jar
-${BACKEND_DIR}/gradlew build
-
 # build image
 docker build -t ${TAG} ${BACKEND_DIR}

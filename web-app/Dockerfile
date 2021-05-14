@@ -1,20 +1,23 @@
-FROM node:14.15-slim
-
-# set working directory
+# build environment
+FROM node:14.15.0-alpine as build
 WORKDIR /app
-
-# add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
-
-# install app dependencies
 COPY package.json ./
-# COPY package-lock.json ./
-RUN npm install react-scripts -g --silent
-RUN npm install --silent
-
-
-# add app
+COPY package-lock.json ./
+RUN npm ci --silent
+RUN npm install react-scripts@3.4.1 -g --silent
 COPY . ./
+RUN npm run build
 
-# start app
-CMD ["npm", "start"]
+# production environment
+FROM nginx:stable-alpine
+# Add bash
+RUN apk add --no-cache bash
+COPY --from=build /app/build /usr/share/nginx/html
+# Copy .env file and shell script to container
+WORKDIR /usr/share/nginx/html
+COPY ./env.sh .
+COPY .env .
+RUN chmod +x env.sh
+EXPOSE 80
+CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]

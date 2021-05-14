@@ -8,5 +8,6 @@ ${ROOT_DIR}/devops/build_web.sh
 docker run \
     -it \
     --rm \
-    -p 3001:3000 \
+    -p 3000:80 \
+    -e API_URL=http://localhost:8080 \
     minik_web_app
