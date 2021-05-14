@@ -1,5 +1,8 @@
 minikube start
+
 minikube dashboard
+    eval $(minikube docker-env) && dims && k9s
+
 minikube addons enable ingress
 minikube addons list
 
