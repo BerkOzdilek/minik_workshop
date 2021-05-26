@@ -7,7 +7,7 @@ function ClickAndShow() {
 
     function onClick() {
         axios({
-            baseURL: window._env_.API_URL,// || 'http://localhost:8080',
+            baseURL: readEnv('REACT_APP_API_URL'),
             url: '/hello',
             headers: {'Accept': '*/*'}
         })
@@ -22,7 +22,8 @@ function ClickAndShow() {
 
     return (
         <div className="App">
-            <p>API_URL: {window._env_.API_URL}</p>
+            <p>API_URL: {readEnv('REACT_APP_API_URL')}</p>
+            <p>asdasd: {process.env['REACT_APP_API_URL']}</p>
             <button onClick={onClick}>
                 Click me
             </button>
@@ -32,3 +33,7 @@ function ClickAndShow() {
 }
 
 export default ClickAndShow;
+
+function readEnv(name) {
+    return window._env_ ? window._env_[name] : process.env[name]
+}

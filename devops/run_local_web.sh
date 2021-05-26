@@ -9,5 +9,5 @@ docker run \
     -it \
     --rm \
     -p 3000:80 \
-    -e API_URL=http://localhost:8080 \
+    -e REACT_APP_API_URL=http://localhost:808 \
     minik_web_app
