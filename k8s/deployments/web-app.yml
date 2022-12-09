@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: web-app
-          image: minik_web_app:v2
+          image: minik_web_app:v1
           imagePullPolicy: Never
           ports:
             - name: http
